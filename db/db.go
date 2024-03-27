@@ -50,14 +50,11 @@ func GetLinks(db *sql.DB) []Link {
 		}
 
 		links = append(links, link)
-		fmt.Printf("Link: %+v\n", link)
 	}
 
 	if err := rows.Err(); err != nil {
 		fmt.Println("Error during row iteration: ", err)
 	}
-
-	fmt.Println("Links: ", links)
 
 	return links
 }
