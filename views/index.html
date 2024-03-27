@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lenkR</title>
+    <link href="/css/global.css" rel="stylesheet" />
+    <link href="/css/button.css" rel="stylesheet" />
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1 class="logo">Lenk<span class="logo-R">R</span></h1>
+
+    <p>
+        lenkR er en URL-forkorterings tjeneste. Den tar lange forferdelige lenker og gjør dem korte og søte så de er lettere å huske på eller dele med andre.
+    </p>
+
+    {{ block "shortened-url-form" . }}
+    <form class="shortened-url-form" hx-post="/shorten" hx-target="#shortened-url-list" hx-swap="afterbegin">
+        <label for="url">
+            Destinasjon:
+            <input type="text" name="url" placeholder="URL" required>
+        </label>
+
+            <label for="short-url">
+                Egen kort URL: <span style="color: var(--grey);">(valgfritt)</span>
+                <div class="input-border mono" style="display: flex; align-items: center;">
+                    <span class="mono">lenkr.t3s.no/l/</span>
+                    <input class="mono" type="text" name="shortUrl" placeholder="Kort URL" style="border: none; padding: 0; font-size: 1rem; flex: 1;">
+                </div>
+            </label>
+
+            <button class="pushable" style="max-width: fit-content;">
+                <span class="shadow"></span>
+                <span class="edge"></span>
+                <span class="front">
+                    Forkort
+                </span>
+            </button>
+    </form>
+    {{ end }}
+
+    <h2>Forkortede lenker</h2>
+    <ul id="shortened-url-list" class="shortened-url-list">
+        {{ range . }}
+            {{ block "shortened-url-item" .}}
+            <li class="shortened-url-list-item">
+                <a class="mono" href="/l/{{ .ShortUrl }}" target="_blank" style="white-space: nowrap;">{{ .ShortUrl }}</a>
+                <span style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">{{ .Url }}</span>
+            </li>
+            {{ end }}
+        {{ end }}
+</body>
+</html>

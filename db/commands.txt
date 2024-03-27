@@ -1,0 +1,11 @@
+# Migrate db
+atlas schema apply -u "${TURSO_DB_URL}?authToken=${TURSO_DB_TOKEN}" \
+ --to file://schema.hcl --exclude '_litestream_seq,_litestream_lock'
+
+# Set token
+export TURSO_DB_TOKEN=$(turso db tokens create atlas)
+
+# Get db url
+turso db show lenkr --url
+
+export TURSO_DB_URL=""
