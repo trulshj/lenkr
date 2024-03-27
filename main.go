@@ -5,7 +5,6 @@ import (
 	"io"
 	"lenkr/db"
 	"lenkr/lib"
-	"log"
 	"net/http"
 	"os"
 	"text/template"
@@ -30,10 +29,7 @@ func NewTemplates() *Templates {
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	godotenv.Load()
 
 	conn := db.ConnectToDb()
 	defer conn.Close()
