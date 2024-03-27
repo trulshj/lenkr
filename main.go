@@ -7,6 +7,7 @@ import (
 	"lenkr/lib"
 	"log"
 	"net/http"
+	"os"
 	"text/template"
 
 	"github.com/joho/godotenv"
@@ -90,6 +91,11 @@ func main() {
 		return err
 	})
 
-	e.Logger.Fatal(e.Start(":8080"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	e.Logger.Fatal(e.Start(":" + port))
 
 }
