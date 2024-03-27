@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"lenkr/db"
@@ -30,6 +31,7 @@ func NewTemplates() *Templates {
 
 func main() {
 	godotenv.Load()
+	err := errors.New("")
 
 	conn := db.ConnectToDb()
 	defer conn.Close()
