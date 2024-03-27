@@ -19,6 +19,14 @@ body {
     --red: hsl(345deg 100% 47%);
 }
 
+a, a:visited {
+    color: var(--red);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 .logo {
     text-align: center;
 }
