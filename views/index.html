@@ -12,11 +12,11 @@
     <h1 class="logo">Lenk<span class="logo-R">R</span></h1>
 
     <p>
-        lenkR er en URL-forkorterings tjeneste. Den tar lange forferdelige lenker og gjør dem korte og søte så de er lettere å huske på eller dele med andre.
+        Har du noen gang hatt lyst å dele en lenke med noen, men så legger du merke til at URL-en er altfor lang og hele Slack-meldingen din ville blitt spist opp av kun den? Dette er problemet vi løser her 🚀
     </p>
 
     {{ block "shortened-url-form" . }}
-    <form class="shortened-url-form" hx-post="/shorten" hx-target="#shortened-url-list" hx-swap="afterbegin">
+    <form class="shortened-url-form" hx-post="/shorten">
         <label for="url">
             Destinasjon:
             <input type="text" name="url" placeholder="URL" required>
@@ -39,16 +39,5 @@
             </button>
     </form>
     {{ end }}
-
-    <h2>Forkortede lenker</h2>
-    <ul id="shortened-url-list" class="shortened-url-list">
-        {{ range . }}
-            {{ block "shortened-url-item" .}}
-            <li class="shortened-url-list-item">
-                <a class="mono" href="/l/{{ .ShortUrl }}" target="_blank" style="white-space: nowrap;">{{ .ShortUrl }}</a>
-                <span style="white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis;">{{ .Url }}</span>
-            </li>
-            {{ end }}
-        {{ end }}
 </body>
 </html>

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"lenkr/db"
@@ -29,9 +28,17 @@ func NewTemplates() *Templates {
 	}
 }
 
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	return port
+}
+
 func main() {
 	godotenv.Load()
-	err := errors.New("")
+	var err error
 
 	conn := db.ConnectToDb()
 	defer conn.Close()
@@ -45,8 +52,12 @@ func main() {
 	e.Static("/css", "css")
 
 	e.GET("/", func(c echo.Context) error {
+		return c.Render(http.StatusOK, "index.html", nil)
+	})
+
+	e.GET("/admin", func(c echo.Context) error {
 		links := db.GetLinks(conn)
-		return c.Render(http.StatusOK, "index.html", links)
+		return c.Render(http.StatusOK, "links.html", links)
 	})
 
 	e.POST("/shorten", func(c echo.Context) error {
@@ -89,11 +100,7 @@ func main() {
 		return err
 	})
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
+	port := getPort()
 	e.Logger.Fatal(e.Start(":" + port))
 
 }
