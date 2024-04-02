@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io"
 	"lenkr/db"
 	"lenkr/lib"
 	"net/http"
 	"os"
-	"text/template"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
